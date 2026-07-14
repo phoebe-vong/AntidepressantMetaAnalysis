@@ -1,6 +1,4 @@
-#This is R code for a practice search in GEO
-#2026-06-22
-#Megan Hagenauer
+#Stephanie Maciejewski
 
 pacman::p_load(pacman, dplyr, GGally, ggplot2, ggthemes, 
                ggvis, httr, lubridate, plotly, rio, rmarkdown, shiny, 
@@ -15,34 +13,28 @@ BiocManager::install("GEOquery")
 
 library(GEOquery)
 
-#Come back to protocols.io and add quotes to "BiocManager" and "GEOquery"
-#protocols.io: are quotation marks in code a problem?
+#protocols.io: quotation marks in code are a problem
 
 ########################
 
 searchGEO
 
-#Example search code:
+#Query terms:
 MyQueryTerms<-'((environ*[All Fields] AND enrich*[All Fields]) OR (enrich*[All Fields] AND housing[All Fields]) OR (enrich*[All Fields] AND housed[All Fields]) OR (social*[All Fields] AND housing[All Fields]) OR (social*[All Fields] AND housed[All Fields]) OR "run"[All Fields] OR running[All Fields] OR exercis*[All Fields] OR wheel*[All Fields] OR toy*[All Fields] OR welfare[All Fields] OR (social[All Fields] AND enrich*[All Fields]) OR (sensor*[All Fields] AND enrich*[All Fields]) OR (motor[All Fields] AND enrich*[All Fields]) OR (cognitiv*[All Fields] AND enrich*[All Fields]) OR (behav*[All Fields] AND enrich*[All Fields]) OR (experienc*[All Fields] AND novel*[All Fields]) OR (environmen*[All Fields] AND novel*[All Fields]) OR (stimulat*[All Fields] AND novel*[All Fields]) OR (stimulat*[All Fields] AND environmen*[All Fields]) OR (stimulat*[All Fields] AND social*[All Fields]) OR (stimulat*[All Fields] AND cognitiv*[All Fields]) OR (stimulat*[All Fields] AND motor*[All Fields]) OR lifestyle[All Fields]) AND 
 (hippocamp*[All Fields] OR "dentate gyrus"[All Fields] OR CA1[All Fields] OR CA2[All Fields] OR CA3[All Fields] OR CA4[All Fields] OR "CA field"[All Fields] OR subiculum[All Fields] OR fimbria[All Fields] OR "cornu ammonis"[All Fields]) AND 
 ("Mus musculus"[ORGN] OR "Rattus norvegicus"[ORGN]) AND 
 ("Expression profiling by high throughput sequencing"[DataSet Type] OR "Expression profiling by array"[DataSet Type]) AND 
 "gse"[Filter]' 
 
-#Another example search code:
-#MyQueryTerms<-'(((chronic*[All Fields] OR subchronic*[All Fields] OR “sub-chronic”[All Fields] OR repeated[All Fields] OR repetitive[All Fields] OR prolonged[All Fields] OR sustained[All Fields] OR continuous*[All Fields] OR extended[All Fields] OR distress*[All Fields]) AND (stress*[All Fields] OR defeat*[All Fields] OR restrain*[All Fields] OR immobil*[All Fields] OR advers*[All Fields] OR subordination[All Fields] OR isolation[All Fields])) OR (allostasis[All Fields]) OR ("allostatic load"[All Fields]) OR ("learned helplessness" [All Fields]) OR (PTSD[All Fields]) OR (sCVS[All Fields]) OR(CVS[All Fields]) OR (CSDS[All Fields]) OR (SDS[All Fields]) OR (“CUS”[All Fields]) OR (CUMS[All Fields]) OR (CMS[All Fields])) AND (hippocamp*[All Fields] OR "dentate gyrus"[All Fields] OR CA1[All Fields] OR CA2[All Fields] OR CA3[All Fields] OR "cornu ammonis"[All Fields]) AND ("Mus musculus"[ORGN] OR "Rattus norvegicus"[ORGN]) AND ("Expression profiling by high throughput sequencing"[DataSet Type] OR "Expression profiling by array"[DataSet Type]) AND "gse"[Filter]' 
-
-
 QueryResults <- searchGEO(MyQueryTerms)
 
 str(QueryResults)
 
-# This will show you an overview of the identified GEO Records:
+# Identified GEO Records:
 
 str(QueryResults)
 
-
-#Adding columns to hold the additional metadata to our Query Results object:
+#Adding columns to hold the additional metadata to the Query Results object:
 
 QueryResults$Citation<-character(length=nrow(QueryResults))
 QueryResults$PMID<-character(length=nrow(QueryResults))
@@ -51,7 +43,6 @@ QueryResults$Date<-character(length=nrow(QueryResults))
 QueryResults$Abstract<-character(length=nrow(QueryResults))
 
 #Looping over each of the identified GEO records and extracting the desired metadata:
-
 
 for(i in c(1:nrow(QueryResults))){
   
@@ -70,7 +61,7 @@ for(i in c(1:nrow(QueryResults))){
   rm(gse_raw)
 }
 
-#Getting an overview of our Query Result object with its new additions:
+#Getting an overview of the Query Result object with its new additions:
 
 str(QueryResults)
 
@@ -86,7 +77,7 @@ QueryResults$Notes<-character(length=nrow(QueryResults))
 # Subjects were divided into groups and one group experienced...
 # Subjects received one of two interventions...
 
-#Lets add some empty columns for taking inclusion/exclusion notes:
+# Add some empty columns for taking inclusion/exclusion notes:
 
 QueryResults$ManipulationUnrelatedToTopic<-character(length=nrow(QueryResults))
 QueryResults$WrongTissue<-character(length=nrow(QueryResults))
@@ -102,6 +93,5 @@ QueryResults$WhyExcluded<-character(length=nrow(QueryResults))
 
 write.csv(QueryResults, "QueryResults2.csv")
 
-#You can see where you outputted the file by checking on the identity of your working directory.
+# Check file output in working directory.
 getwd()
-# [1] "/Users/Owner/Library/CloudStorage/GoogleDrive-smacieje@umich.edu/My Drive/BrainAlchemyProject/ProjectFolders/2026_TeamAntidepressant/R_Output_And_Results/Query_Results"
