@@ -1,10 +1,24 @@
 {
-    "image": "rocker/r-ver:4.5",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "REditorSupport.r"
-            ]
-        }
+  "name": "R Transcriptomics Development",
+
+  "image": "rocker/r-ver:4.5",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "REditorSupport.r",
+        "RDebugger.r-debugger",
+        "ms-toolsai.jupyter"
+      ],
+      "settings": {
+        "r.rterm.linux": "/usr/local/bin/R"
+      }
     }
+  }
 }
