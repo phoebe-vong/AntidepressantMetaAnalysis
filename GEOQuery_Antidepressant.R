@@ -20,7 +20,22 @@ library(GEOquery)
 searchGEO
 
 #Query terms:
-MyQueryTerms<-'((environ*[All Fields] AND enrich*[All Fields]) OR (enrich*[All Fields] AND housing[All Fields]) OR (enrich*[All Fields] AND housed[All Fields]) OR (social*[All Fields] AND housing[All Fields]) OR (social*[All Fields] AND housed[All Fields]) OR "run"[All Fields] OR running[All Fields] OR exercis*[All Fields] OR wheel*[All Fields] OR toy*[All Fields] OR welfare[All Fields] OR (social[All Fields] AND enrich*[All Fields]) OR (sensor*[All Fields] AND enrich*[All Fields]) OR (motor[All Fields] AND enrich*[All Fields]) OR (cognitiv*[All Fields] AND enrich*[All Fields]) OR (behav*[All Fields] AND enrich*[All Fields]) OR (experienc*[All Fields] AND novel*[All Fields]) OR (environmen*[All Fields] AND novel*[All Fields]) OR (stimulat*[All Fields] AND novel*[All Fields]) OR (stimulat*[All Fields] AND environmen*[All Fields]) OR (stimulat*[All Fields] AND social*[All Fields]) OR (stimulat*[All Fields] AND cognitiv*[All Fields]) OR (stimulat*[All Fields] AND motor*[All Fields]) OR lifestyle[All Fields]) AND 
+MyQueryTerms<-'(
+(environ*[All Fields] AND enrich*[All Fields]) OR 
+(enrich*[All Fields] AND housing[All Fields]) OR 
+(enrich*[All Fields] AND housed[All Fields]) OR 
+(social*[All Fields] AND housing[All Fields]) OR 
+(social*[All Fields] AND housed[All Fields]) OR "run"[All Fields] OR running[All Fields] OR exercis*[All Fields] OR wheel*[All Fields] OR toy*[All Fields] OR welfare[All Fields] OR 
+(social[All Fields] AND enrich*[All Fields]) OR 
+(sensor*[All Fields] AND enrich*[All Fields]) OR (motor[All Fields] AND enrich*[All Fields]) OR 
+(cognitiv*[All Fields] AND enrich*[All Fields]) OR (behav*[All Fields] AND enrich*[All Fields]) OR 
+(experienc*[All Fields] AND novel*[All Fields]) OR 
+(environmen*[All Fields] AND novel*[All Fields]) OR 
+(stimulat*[All Fields] AND novel*[All Fields]) OR 
+(stimulat*[All Fields] AND environmen*[All Fields]) OR 
+(stimulat*[All Fields] AND social*[All Fields]) OR 
+(stimulat*[All Fields] AND cognitiv*[All Fields]) OR 
+(stimulat*[All Fields] AND motor*[All Fields]) OR lifestyle[All Fields]) AND 
 (hippocamp*[All Fields] OR "dentate gyrus"[All Fields] OR CA1[All Fields] OR CA2[All Fields] OR CA3[All Fields] OR CA4[All Fields] OR "CA field"[All Fields] OR subiculum[All Fields] OR fimbria[All Fields] OR "cornu ammonis"[All Fields]) AND 
 ("Mus musculus"[ORGN] OR "Rattus norvegicus"[ORGN]) AND 
 ("Expression profiling by high throughput sequencing"[DataSet Type] OR "Expression profiling by array"[DataSet Type]) AND 
