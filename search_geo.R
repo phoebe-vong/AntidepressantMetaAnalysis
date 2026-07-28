@@ -1,4 +1,5 @@
-#This is R code for a practice search in GEO
+# Step 1 of the differential expression meta analysis
+#This is R code for a search in GEO
 #2026-07-27
 # Stephanie Maciejewski
 
