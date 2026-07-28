@@ -1,3 +1,4 @@
+# Step 2 of the differential expression meta analysis
 # Grabbing information from Gemma about
 # the distribution of the preprocessed data on Gemma
 # the statistical contrasts performed during differential expression analysis by Gemma
