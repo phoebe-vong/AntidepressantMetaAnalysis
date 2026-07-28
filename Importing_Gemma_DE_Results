@@ -1,34 +1,44 @@
-#Example code for importing Gemma's differential expression results for our screened datasets
-#Megan Hagenauer
-#2026-07-22
+# Code for importing Gemma's differential expression results for our screened datasets
+# Stephanie Maciejewski
+# 2026-07-28
 
-#This is the code if we already narrowed our result sets down to only the ones that we want
-ResultSet_contrasts<-read.csv("ResultSets_Screened.csv", header=TRUE, stringsAsFactors = FALSE )
+# ================================================================
+# Load libraries and data
+# ================================================================
 
-#Here is code if we want to subset our result sets by the "Include" column:
+library(gemma.R)
+library(tidyr)
+
+# Option 1: if the csv has already been edited to the kept studies
+result_set_contrasts <- read.csv("ResultSets_Screened.csv", header=TRUE, stringsAsFactors = FALSE )
+
+# Option 2: subsetting results using the "include" column
 list.files()
-ResultSets_toScreen<-read.csv("ResultSets_toScreen - ResultSets_toScreen.csv", header=TRUE, stringsAsFactors = FALSE)
+results_to_screen <- read.csv("ResultSets_toScreen - ResultSets_toScreen.csv", header=TRUE, stringsAsFactors = FALSE)
 
-str(ResultSets_toScreen)
+str(results_to_screen)
 
-ResultSet_contrasts<-ResultSets_toScreen[ResultSets_toScreen$Include=="Y", ]
+result_set_contrasts<-results_to_screen[results_to_screen$Include == "Y", ]
 
-str(ResultSet_contrasts)
 
-#Reading in the function:
+str(result_set_contrasts)
 
-DownloadingDEResults<-function(ResultSet_contrasts){
+# ================================================================
+# Function
+# ================================================================
+
+downloading_de_results <- function(result_set_contrasts) {
   
   #Some ResultSets have more than one statistical contrast, so they are present more than once in our data frame, e.g.:
   #ResultSet_contrasts$ResultSetIDs
   #[1] 553805 553805 553805 570552 556647
-  
   #To pull down the statistical results, we'll only want the unique result set ids:
+
   UniqueResultSetIDs<-unique(ResultSet_contrasts$ResultSetIDs)
   
   print("These are the result sets that you identified as being of interest")
   print(UniqueResultSetIDs)
-  #553805 570552 556647
+  #[1] 553805 570552 556647
   
   differentials <- UniqueResultSetIDs %>% lapply(function(x){
     #   # take the first and only element of the output. the function returns a list 
@@ -38,7 +48,6 @@ DownloadingDEResults<-function(ResultSet_contrasts){
   })
   
   str(differentials)
-  #That code worked. Excellent!
   
   # # some datasets might not have all the advertised differential expression results
   # # calculated due to a variety of factors. here we remove the empty differentials
@@ -79,17 +88,13 @@ DownloadingDEResults<-function(ResultSet_contrasts){
   
 }
 
+downloading_de_results(result_set_contrasts)
 
-library(gemma.R)
-library(tidyr)
+# ================================================================
+# Saving results
+# ================================================================
 
-DownloadingDEResults(ResultSet_contrasts)
-
-
-#################
-
-
-SavingGemmaDEResults_forEachResultSet<-function(differentials, UniqueResultSetIDs, ResultSet_contrasts){
+save_results_per_set<-function(differentials, UniqueResultSetIDs, result_set_contrasts){
   
   for (i in c(1:length(differentials))){
     
@@ -110,13 +115,10 @@ SavingGemmaDEResults_forEachResultSet<-function(differentials, UniqueResultSetID
 
 
 #You can input this function by running the code discussed above to create the function in your R environment. 
-
-#Alternatively, you can download the script for the function from our Github site and save the file in your working directory:
-#https://github.com/hagenaue/BrainDataAlchemy/blob/main/MetaAnalysis_GemmaDEResults_2024/Function_SavingGemmaDEResults_forEachResultSet.R
-
+#Alternatively, you can download the script for the function from our Github site and save the file in your working directory
 #And then source it from your working directory:
 source("Function_SavingGemmaDEResults_forEachResultSet.R")
 
 #Example usage:
 
-SavingGemmaDEResults_forEachResultSet(differentials, UniqueResultSetIDs, ResultSet_contrasts)
+save_results_per_set(differentials, UniqueResultSetIDs, result_set_contrasts)
